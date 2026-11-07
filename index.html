@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>nebenan.de — Connect With Your Neighbors & Discover Local Communities</title>
+    <meta name="description"
+        content="nebenan.de is the modern, privacy-focused social app connecting you with your neighbors, trusted communities, events, and local discussions." />
+
+    <!-- Favicon -->
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%230284c7'/><path d='M30 65 L50 30 L70 65 Z' fill='%23ffffff'/><circle cx='50' cy='62' r='5' fill='%2338bdf8'/></svg>" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet" />
+
+    <style>
+        :root {
+            --font-heading: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+            --color-primary: #0284c7;
+            --color-primary-hover: #0369a1;
+            --color-primary-light: #e0f2fe;
+            --color-primary-glow: rgba(2, 132, 199, 0.28);
+
+            --color-accent: #10b981;
+            --color-accent-purple: #8b5cf6;
+
+            --bg-dark: #090d16;
+            --bg-card: rgba(17, 24, 39, 0.85);
+            --bg-card-border: rgba(255, 255, 255, 0.08);
+            --bg-card-hover: rgba(30, 41, 59, 0.9);
+
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --text-subtle: #64748b;
+
+            --radius-sm: 8px;
+            --radius-md: 14px;
+            --radius-lg: 22px;
+            --radius-xl: 32px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Ambient Background Glow */
+        .ambient-glow-1 {
+            position: absolute;
+            top: -120px;
+            left: 10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(2, 132, 199, 0.22) 0%, transparent 70%);
+            filter: blur(80px);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .ambient-glow-2 {
+            position: absolute;
+            top: 300px;
+            right: 5%;
+            width: 450px;
+            height: 450px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.18) 0%, transparent 70%);
+            filter: blur(90px);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Navbar */
+        header.site-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(9, 13, 22, 0.82);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--bg-card-border);
+            padding: 16px 0;
+        }
+
+        .nav-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .brand-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #0284c7, #2563eb);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px var(--color-primary-glow);
+        }
+
+        .brand-name {
+            font-family: var(--font-heading);
+            font-size: 1.35rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .brand-name span {
+            color: var(--color-primary);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.94rem;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: #fff;
+        }
+
+        .btn-nav-download {
+            background: linear-gradient(135deg, #0284c7, #2563eb);
+            color: #fff;
+            padding: 9px 20px;
+            border-radius: 99px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: 0 4px 14px var(--color-primary-glow);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn-nav-download:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(2, 132, 199, 0.45);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            padding: 90px 0 60px;
+            position: relative;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            align-items: center;
+            gap: 56px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            background: rgba(2, 132, 199, 0.12);
+            border: 1px solid rgba(2, 132, 199, 0.35);
+            border-radius: 99px;
+            font-size: 0.84rem;
+            font-weight: 600;
+            color: #38bdf8;
+            margin-bottom: 22px;
+        }
+
+        .hero-title {
+            font-family: var(--font-heading);
+            font-size: 3.4rem;
+            font-weight: 800;
+            line-height: 1.15;
+            letter-spacing: -1.2px;
+            margin-bottom: 20px;
+        }
+
+        .hero-title .gradient-text {
+            background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-desc {
+            font-size: 1.12rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 34px;
+            max-width: 540px;
+        }
+
+        .hero-cta-group {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 38px;
+        }
+
+        .app-store-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: #0f172a;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 11px 20px;
+            border-radius: var(--radius-md);
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .app-store-btn:hover {
+            background: #1e293b;
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .app-store-btn svg {
+            width: 26px;
+            height: 26px;
+            fill: #fff;
+        }
+
+        .app-store-btn .btn-text-small {
+            display: block;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .app-store-btn .btn-text-large {
+            display: block;
+            font-size: 0.95rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .hero-stats-row {
+            display: flex;
+            align-items: center;
+            gap: 36px;
+            padding-top: 24px;
+            border-top: 1px solid var(--bg-card-border);
+        }
+
+        .stat-item strong {
+            display: block;
+            font-family: var(--font-heading);
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: -0.5px;
+        }
+
+        .stat-item span {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Device Mockup */
+        .phone-mockup-wrapper {
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+
+        .phone-mockup-wrapper::before {
+            content: '';
+            position: absolute;
+            width: 320px;
+            height: 320px;
+            background: radial-gradient(circle, rgba(2, 132, 199, 0.25) 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            filter: blur(50px);
+            z-index: 0;
+        }
+
+        .iphone-frame {
+            position: relative;
+            z-index: 1;
+            width: 310px;
+            height: 610px;
+            background: #020617;
+            border-radius: 46px;
+            padding: 12px;
+            border: 4px solid #334155;
+            box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dynamic-island {
+            width: 90px;
+            height: 22px;
+            background: #000;
+            border-radius: 20px;
+            margin: 4px auto 10px;
+        }
+
+        .app-screen-content {
+            background: #0b1120;
+            flex: 1;
+            border-radius: 36px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 12px;
+        }
+
+        .screen-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            margin-bottom: 10px;
+        }
+
+        .screen-logo {
+            font-weight: 800;
+            font-size: 0.95rem;
+            letter-spacing: -0.3px;
+        }
+
+        .screen-logo span {
+            color: var(--color-primary);
+        }
+
+        /* Stories Mockup */
+        .screen-stories-row {
+            display: flex;
+            gap: 10px;
+            overflow-x: hidden;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            margin-bottom: 12px;
+        }
+
+        .story-circle-mock {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .story-ring {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            padding: 2px;
+            background: linear-gradient(135deg, #0284c7, #38bdf8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .story-avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: #1e293b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: #93c5fd;
+        }
+
+        .story-name {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+        }
+
+        /* Post Mockup */
+        .screen-post-card {
+            background: #131b2e;
+            border-radius: 16px;
+            padding: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .post-avatar-small {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #3b82f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .post-meta {
+            flex: 1;
+        }
+
+        .post-author {
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .post-community-badge {
+            font-size: 0.65rem;
+            color: #38bdf8;
+        }
+
+        .post-mock-image {
+            width: 100%;
+            height: 130px;
+            background: linear-gradient(135deg, #1e3a8a, #0369a1);
+            border-radius: 10px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .post-caption-mock {
+            font-size: 0.72rem;
+            color: var(--text-main);
+            line-height: 1.4;
+            margin-bottom: 8px;
+        }
+
+        .post-actions-mock {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 90px 0;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 680px;
+            margin: 0 auto 56px;
+        }
+
+        .section-tag {
+            display: inline-block;
+            text-transform: uppercase;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--color-primary);
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: 2.35rem;
+            font-weight: 800;
+            letter-spacing: -0.8px;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .section-desc {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 28px;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--bg-card-border);
+            border-radius: var(--radius-lg);
+            padding: 32px 28px;
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(2, 132, 199, 0.4);
+            box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.4);
+        }
+
+        .feature-icon-box {
+            width: 52px;
+            height: 52px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 22px;
+        }
+
+        .feature-icon-box.blue {
+            background: rgba(2, 132, 199, 0.15);
+            color: #38bdf8;
+        }
+
+        .feature-icon-box.purple {
+            background: rgba(139, 92, 246, 0.15);
+            color: #a78bfa;
+        }
+
+        .feature-icon-box.green {
+            background: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+        }
+
+        .feature-card h3 {
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Communities Showcase Section */
+        .communities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .community-box {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid var(--bg-card-border);
+            border-radius: var(--radius-md);
+            padding: 22px;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            transition: all 0.2s ease;
+        }
+
+        .community-box:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .community-icon-circle {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.06);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .community-details h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .community-details p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+            margin-bottom: 8px;
+        }
+
+        .community-members-tag {
+            font-size: 0.74rem;
+            color: #38bdf8;
+            font-weight: 600;
+        }
+
+        /* Privacy & Safety Banner */
+        .safety-banner {
+            background: linear-gradient(135deg, rgba(2, 132, 199, 0.12) 0%, rgba(139, 92, 246, 0.08) 100%);
+            border: 1px solid rgba(2, 132, 199, 0.3);
+            border-radius: var(--radius-xl);
+            padding: 56px 48px;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .safety-banner h3 {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+
+        .safety-banner p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 24px;
+        }
+
+        .safety-checklist {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .safety-checklist li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.92rem;
+            color: #e2e8f0;
+            font-weight: 500;
+        }
+
+        .safety-checklist svg {
+            width: 18px;
+            height: 18px;
+            fill: #34d399;
+            flex-shrink: 0;
+        }
+
+        /* FAQ Section */
+        .faq-wrapper {
+            max-width: 760px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        details.faq-item {
+            background: var(--bg-card);
+            border: 1px solid var(--bg-card-border);
+            border-radius: var(--radius-md);
+            padding: 20px 24px;
+            transition: border-color 0.2s ease;
+        }
+
+        details.faq-item[open] {
+            border-color: rgba(2, 132, 199, 0.4);
+        }
+
+        summary.faq-question {
+            font-family: var(--font-heading);
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            user-select: none;
+        }
+
+        summary.faq-question::-webkit-details-marker {
+            display: none;
+        }
+
+        summary.faq-question::after {
+            content: '+';
+            font-size: 1.3rem;
+            color: var(--color-primary);
+            transition: transform 0.2s ease;
+        }
+
+        details[open] summary.faq-question::after {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            margin-top: 14px;
+            font-size: 0.94rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* Call To Action Banner */
+        .cta-section {
+            text-align: center;
+            padding: 90px 0;
+        }
+
+        .cta-card {
+            background: radial-gradient(circle at 50% 0%, rgba(2, 132, 199, 0.25) 0%, rgba(15, 23, 42, 0.9) 70%);
+            border: 1px solid rgba(2, 132, 199, 0.35);
+            border-radius: var(--radius-xl);
+            padding: 64px 32px;
+            max-width: 900px;
+            margin: 0 auto;
+            box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.5);
+        }
+
+        .cta-card h2 {
+            font-family: var(--font-heading);
+            font-size: 2.6rem;
+            font-weight: 800;
+            letter-spacing: -0.8px;
+            margin-bottom: 16px;
+        }
+
+        .cta-card p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 580px;
+            margin: 0 auto 36px;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer.site-footer {
+            border-top: 1px solid var(--bg-card-border);
+            padding: 48px 0 32px;
+            background: #060911;
+            font-size: 0.88rem;
+            color: var(--text-subtle);
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: #fff;
+        }
+
+        .footer-support-email {
+            color: #38bdf8;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-desc {
+                margin: 0 auto 34px;
+            }
+
+            .hero-cta-group {
+                justify-content: center;
+            }
+
+            .hero-stats-row {
+                justify-content: center;
+            }
+
+            .safety-banner {
+                grid-template-columns: 1fr;
+                padding: 36px 24px;
+            }
+
+            .hero-title {
+                font-size: 2.6rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Ambient Glow Backgrounds -->
+    <div class="ambient-glow-1"></div>
+    <div class="ambient-glow-2"></div>
+
+    <!-- Header Navigation -->
+    <header class="site-header">
+        <div class="container nav-wrapper">
+            <a href="#" class="brand-logo">
+                <div class="brand-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                </div>
+                <span class="brand-name">nebenan<span>.de</span></span>
+            </a>
+
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#communities">Communities</a></li>
+                <li><a href="#safety">Trust & Safety</a></li>
+                <li><a href="#faq">FAQ</a></li>
+            </ul>
+
+            <a href="#download" class="btn-nav-download">Get the App</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container hero-grid">
+            <div class="hero-left">
+                <div class="hero-badge">
+                    <span>✨</span> The Modern Neighborhood Network
+                </div>
+                <h1 class="hero-title">
+                    Connect with Your Neighbors. <br />
+                    <span class="gradient-text">Discover Your Community.</span>
+                </h1>
+                <p class="hero-desc">
+                    nebenan.de connects you with the people living right next door. Share recommendations, borrow tools,
+                    organize neighborhood meetups, and stay informed on local happenings.
+                </p>
+
+                <div class="hero-cta-group">
+                    <!-- App Store Badge -->
+                    <a href="#download" class="app-store-btn">
+                        <svg viewBox="0 0 384 512">
+                            <path
+                                d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z" />
+                        </svg>
+                        <div>
+                            <span class="btn-text-small">Download on the</span>
+                            <span class="btn-text-large">App Store</span>
+                        </div>
+                    </a>
+
+                    <!-- Google Play Badge -->
+                    <a href="#download" class="app-store-btn">
+                        <svg viewBox="0 0 512 512">
+                            <path
+                                d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z" />
+                        </svg>
+                        <div>
+                            <span class="btn-text-small">Get it on</span>
+                            <span class="btn-text-large">Google Play</span>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="hero-stats-row">
+                    <div class="stat-item">
+                        <strong>50,000+</strong>
+                        <span>Active Neighbors</span>
+                    </div>
+                    <div class="stat-item">
+                        <strong>1,200+</strong>
+                        <span>Local Communities</span>
+                    </div>
+                    <div class="stat-item">
+                        <strong>100%</strong>
+                        <span>Privacy Guaranteed</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hero Right: Interactive Mobile Mockup -->
+            <div class="phone-mockup-wrapper">
+                <div class="iphone-frame">
+                    <div class="dynamic-island"></div>
+                    <div class="app-screen-content">
+                        <div class="screen-header">
+                            <span class="screen-logo">nebenan<span>.de</span></span>
+                            <span style="font-size:0.75rem; color:#38bdf8; font-weight:600;">Berlin-Mitte</span>
+                        </div>
+
+                        <!-- Stories Row -->
+                        <div class="screen-stories-row">
+                            <div class="story-circle-mock">
+                                <div class="story-ring">
+                                    <div class="story-avatar">You</div>
+                                </div>
+                                <span class="story-name">Your Story</span>
+                            </div>
+                            <div class="story-circle-mock">
+                                <div class="story-ring">
+                                    <div class="story-avatar">EM</div>
+                                </div>
+                                <span class="story-name">Emma</span>
+                            </div>
+                            <div class="story-circle-mock">
+                                <div class="story-ring">
+                                    <div class="story-avatar">LK</div>
+                                </div>
+                                <span class="story-name">Lukas</span>
+                            </div>
+                            <div class="story-circle-mock">
+                                <div class="story-ring">
+                                    <div class="story-avatar">SN</div>
+                                </div>
+                                <span class="story-name">Sophie</span>
+                            </div>
+                        </div>
+
+                        <!-- Feed Post Mockup -->
+                        <div class="screen-post-card">
+                            <div class="post-header">
+                                <div class="post-avatar-small">E</div>
+                                <div class="post-meta">
+                                    <div class="post-author">Emma Weber <span style="color:#10b981;">✓</span></div>
+                                    <div class="post-community-badge">🌿 Urban Gardeners Club</div>
+                                </div>
+                            </div>
+                            <div class="post-mock-image">
+                                🌻 Neighborhood harvest today!
+                            </div>
+                            <p class="post-caption-mock">
+                                We have extra organic tomato seedlings and fresh mint leaves outside house #42. Free to
+                                any neighbor who wants them!
+                            </p>
+                            <div class="post-actions-mock">
+                                <span>❤️ 24 likes</span>
+                                <span>💬 7 comments</span>
+                                <span>🚀 Share</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Features Section -->
+    <section id="features">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Powerful Features</span>
+                <h2 class="section-title">Everything You Need for a Connected Neighborhood</h2>
+                <p class="section-desc">
+                    Built specifically for local communities. Discover how nebenan.de makes everyday neighborhood life
+                    friendlier, safer, and more collaborative.
+                </p>
+            </div>
+
+            <div class="features-grid">
+                <!-- Feature 1 -->
+                <div class="feature-card">
+                    <div class="feature-icon-box blue">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 11a9 9 0 0 1 9 9"></path>
+                            <path d="M4 4a16 16 0 0 1 16 16"></path>
+                            <circle cx="5" cy="19" r="1"></circle>
+                        </svg>
+                    </div>
+                    <h3>Hyperlocal Feed</h3>
+                    <p>
+                        Stay updated with real-time news, questions, giveaways, and recommendations from verified
+                        neighbors right in your immediate vicinity.
+                    </p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="feature-card">
+                    <div class="feature-icon-box purple">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                    </div>
+                    <h3>Interest Communities</h3>
+                    <p>
+                        Join or start local groups based on shared passions — whether it's dog walking, gardening, DIY
+                        repair tool sharing, or neighborhood sports.
+                    </p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="feature-card">
+                    <div class="feature-icon-box green">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                    </div>
+                    <h3>Direct & Group Messaging</h3>
+                    <p>
+                        Coordinate easily with individual neighbors or entire group chats. Secure, end-to-end encrypted
+                        messaging with instant photo and media sharing.
+                    </p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="feature-card">
+                    <div class="feature-icon-box blue">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                    </div>
+                    <h3>24-Hour Stories</h3>
+                    <p>
+                        Share ephemeral moments, lost pet sightings, or temporary neighborhood yard sales with rich
+                        photo and video stories that vanish in 24 hours.
+                    </p>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="feature-card">
+                    <div class="feature-icon-box purple">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
+                    </div>
+                    <h3>Privacy-First Architecture</h3>
+                    <p>
+                        Strict verification ensures only real residents in your neighborhood can view your posts. Your
+                        exact address is never displayed publicly.
+                    </p>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="feature-card">
+                    <div class="feature-icon-box green">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        </svg>
+                    </div>
+                    <h3>Verified Real Profiles</h3>
+                    <p>
+                        Rest assured you are talking to genuine neighbors. Bot detection and optional address
+                        verification maintain high community standards.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Communities Showcase -->
+    <section id="communities" style="background: rgba(15, 23, 42, 0.4);">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Active Groups</span>
+                <h2 class="section-title">Popular Neighborhood Communities</h2>
+                <p class="section-desc">
+                    Whatever your hobby or need, there is an active local group waiting to welcome you.
+                </p>
+            </div>
+
+            <div class="communities-grid">
+                <div class="community-box">
+                    <div class="community-icon-circle">🌱</div>
+                    <div class="community-details">
+                        <h4>Urban Gardeners & Plants</h4>
+                        <p>Seed swaps, plant care tips, and balcony harvest exchanges.</p>
+                        <span class="community-members-tag">184 Neighbors</span>
+                    </div>
+                </div>
+
+                <div class="community-box">
+                    <div class="community-icon-circle">🐕</div>
+                    <div class="community-details">
+                        <h4>Dog Lovers & Walking Club</h4>
+                        <p>Group evening walks, pet-friendly park tips, and pet sitting.</p>
+                        <span class="community-members-tag">290 Neighbors</span>
+                    </div>
+                </div>
+
+                <div class="community-box">
+                    <div class="community-icon-circle">🎁</div>
+                    <div class="community-details">
+                        <h4>Free Giveaway & Borrowing</h4>
+                        <p>Give items a second life: furniture, tools, books, and appliances.</p>
+                        <span class="community-members-tag">512 Neighbors</span>
+                    </div>
+                </div>
+
+                <div class="community-box">
+                    <div class="community-icon-circle">🚲</div>
+                    <div class="community-details">
+                        <h4>Cyclists & Weekend Rides</h4>
+                        <p>Commute routes, DIY bike repairs, and weekend trail trips.</p>
+                        <span class="community-members-tag">143 Neighbors</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust, Privacy & Safety Banner -->
+    <section id="safety">
+        <div class="container">
+            <div class="safety-banner">
+                <div>
+                    <h3>Your Neighborhood, Protected & Private.</h3>
+                    <p>
+                        We believe local networks must earn your trust. At <strong>nebenan.de</strong>, we adhere to the
+                        highest European privacy standards (GDPR) and ensure your personal data is never sold or used
+                        for intrusive commercial profiling.
+                    </p>
+                    <ul class="safety-checklist">
+                        <li>
+                            <svg viewBox="0 0 24 24">
+                                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                            </svg>
+                            Verified neighborhood boundaries so only locals can join.
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24">
+                                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                            </svg>
+                            Zero address disclosure: your exact street address remains private.
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24">
+                                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                            </svg>
+                            Dedicated community moderation and zero tolerance for harassment.
+                        </li>
+                    </ul>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 5rem; line-height: 1;">🛡️</div>
+                    <p style="margin-top: 12px; font-weight: 600; color: #fff;">GDPR Compliant & Safe</p>
+                    <span style="font-size: 0.85rem; color: var(--text-muted);">Encrypted Cloud Storage</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Frequently Asked Questions</span>
+                <h2 class="section-title">Got Questions? We Have Answers.</h2>
+                <p class="section-desc">
+                    Everything you need to know about joining and participating in your neighborhood network.
+                </p>
+            </div>
+
+            <div class="faq-wrapper">
+                <details class="faq-item" open>
+                    <summary class="faq-question">Is nebenan.de free to use?</summary>
+                    <div class="faq-answer">
+                        Yes! nebenan.de is 100% free for neighbors. You can create an account, browse your local feed,
+                        join community groups, and chat with neighbors at zero cost.
+                    </div>
+                </details>
+
+                <details class="faq-item">
+                    <summary class="faq-question">Who can see my posts and profile?</summary>
+                    <div class="faq-answer">
+                        Only verified neighbors within your local area or fellow members of the specific community
+                        groups you join can see your posts. You can also customize your profile privacy settings at any
+                        time in the app.
+                    </div>
+                </details>
+
+                <details class="faq-item">
+                    <summary class="faq-question">Can I create my own local community group?</summary>
+                    <div class="faq-answer">
+                        Absolutely! Anyone can create a community group for their neighborhood (such as gardening,
+                        running, childcare, or emergency assistance). You can choose to make it public to all neighbors
+                        or invite-only.
+                    </div>
+                </details>
+
+                <details class="faq-item">
+                    <summary class="faq-question">How do I reach support if I need help?</summary>
+                    <div class="faq-answer">
+                        Our support team is always ready to assist. You can reach out directly via email at <a
+                            href="mailto:support.nebenan.de@gmail.com"
+                            class="footer-support-email">support.nebenan.de@gmail.com</a>.
+                    </div>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final Call to Action -->
+    <section id="download" class="cta-section">
+        <div class="container">
+            <div class="cta-card">
+                <h2>Bring Your Neighborhood Closer Today</h2>
+                <p>
+                    Join thousands of neighbors who are already discovering local recommendations, borrowing tools, and
+                    building stronger local communities.
+                </p>
+                <div class="hero-cta-group" style="justify-content: center; margin-bottom: 0;">
+                    <a href="#" class="app-store-btn">
+                        <svg viewBox="0 0 384 512">
+                            <path
+                                d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z" />
+                        </svg>
+                        <div>
+                            <span class="btn-text-small">Download on the</span>
+                            <span class="btn-text-large">App Store</span>
+                        </div>
+                    </a>
+
+                    <a href="#" class="app-store-btn">
+                        <svg viewBox="0 0 512 512">
+                            <path
+                                d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z" />
+                        </svg>
+                        <div>
+                            <span class="btn-text-small">Get it on</span>
+                            <span class="btn-text-large">Google Play</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container footer-content">
+            <a href="#" class="brand-logo">
+                <div class="brand-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                </div>
+                <span class="brand-name">nebenan<span>.de</span></span>
+            </a>
+
+            <div class="footer-links">
+                <a href="#features">Features</a>
+                <a href="#communities">Communities</a>
+                <a href="#safety">Privacy & Security</a>
+                <a href="#faq">FAQ</a>
+                <a href="mailto:support.nebenan.de@gmail.com">Contact Support</a>
+            </div>
+
+            <p>
+                For inquiries, please contact: <a href="mailto:support.nebenan.de@gmail.com"
+                    class="footer-support-email">support.nebenan.de@gmail.com</a>
+            </p>
+
+            <p style="font-size: 0.8rem; color: #475569;">
+                &copy; 2026 nebenan.de. All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+</body>
+
+</html>
